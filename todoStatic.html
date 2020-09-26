@@ -11,7 +11,7 @@
 		<section id="app" class="todoapp">
 			<header class="header">
 				<h1>todos</h1>
-				<input class="new-todo" placeholder="你需要做什么" autocomplete="off" autofocus v-model="input" @keyup.enter="addTodo" />
+				<input class="new-todo" placeholder="你需要做什么" autocomplete="off" autofocus />
 			</header>
 			<section class="main">
 				<input id="toggle-all" class="toggle-all" type="checkbox" />
@@ -50,7 +50,7 @@
 					<li><a href="#/active">进行中</a></li>
 					<li><a href="#/completed">已完成</a></li>
 				</ul>
-				<button class="clear-completed" @click="removeCompleted">清除已完成</button>
+				<button class="clear-completed">清除已完成</button>
 			</footer>
 		</section>
 		<footer class="info">
@@ -65,7 +65,7 @@
 <!-- 
 	功能描述：
 		头部：
-			1. 点击输入框可以添加todo事项
+			1. 点击输入框可以添加todo事项(按enter键触发添加)
 			2. 点击左侧下拉菜单可以完成所有todo(有todos时显示)
 		todos列表：
 			1. 显示所有todos事项列表

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>todo静态页</title>
+		<link rel="stylesheet" href="https://unpkg.com/todomvc-app-css/index.css" />
+		<style>
+			[v-cloak] {
+				display: none;
+			}
+		</style>
+	</head>
+	<body>
+		<section id="app" class="todoapp" v-cloak>
+			<header class="header">
+				<h1>todos</h1>
+				<input v-model.trim="input" @keyup.enter="addTodo" class="new-todo" placeholder="你需要做什么" autocomplete="off" autofocus />
+			</header>
+			<section class="main">
+				<input id="toggle-all" class="toggle-all" type="checkbox" />
+				<label for="toggle-all">点击完成所有事项</label>
+				<ul class="todo-list">
+					<li v-for="todo in todos" :class="{completed:todo.completed }">
+						<div class="view" style="display: block">
+							<input class="toggle" type="checkbox" />
+							<label>{{todo.text}}</label>
+							<button class="destroy"></button>
+						</div>
+						<!-- <input class="edit" type="text" /> -->
+					</li>
+					<!-- <li class="editing">
+						<div class="view">
+							<input class="toggle" type="checkbox" />
+							<label>内容</label>
+							<button class="destroy"></button>
+						</div>
+						<input class="edit" type="text" />
+					</li> -->
+				</ul>
+			</section>
+			<footer class="footer">
+				<span class="todo-count">进行中<strong>0</strong>items left </span>
+				<ul class="filters">
+					<li><a href="#/all" class="selected">显示所有</a></li>
+					<li><a href="#/active">进行中</a></li>
+					<li><a href="#/completed">已完成</a></li>
+				</ul>
+				<button class="clear-completed">清除已完成</button>
+			</footer>
+		</section>
+		<footer class="info">
+			<p>双击编辑todo事项</p>
+			<!-- Change this out with your name and url ↓ -->
+			<p>创建者<a href="https://zce.me">zce</a></p>
+			<p>编辑者<a href="http://evanyou.me">Evan You</a></p>
+			<p>Part of <a href="http://todomvc.com">TodoMVC</a></p>
+		</footer>
+		<!-- <script src="https://unpkg.com/vue@next/dist/vue.global.js"></script> -->
+		<script src="https://unpkg.com/vue@next"></script>
+		<script src="./index.js"></script>
+	</body>
+</html>
