@@ -11,6 +11,7 @@
 			}
 		</style>
 	</head>
+
 	<body>
 		<section id="app" class="todoapp" v-cloak>
 			<header class="header">
@@ -18,16 +19,16 @@
 				<input v-model.trim="input" @keyup.enter="addTodo" class="new-todo" placeholder="你需要做什么" autocomplete="off" autofocus />
 			</header>
 			<section class="main">
-				<input id="toggle-all" class="toggle-all" type="checkbox" />
+				<input v-model="allDone" id="toggle-all" class="toggle-all" type="checkbox" />
 				<label for="toggle-all">点击完成所有事项</label>
 				<ul class="todo-list">
-					<li v-for="todo in todos" :class="{completed:todo.completed }">
-						<div class="view" style="display: block">
-							<input class="toggle" type="checkbox" />
-							<label>{{todo.text}}</label>
-							<button class="destroy"></button>
+					<li v-for="todo in filteredTodos" :key="todo.id" :class="{completed: todo.completed, editing: todo==editingTodo }">
+						<div class="view">
+							<input v-model="todo.completed" class="toggle" type="checkbox" />
+							<label @dblclick="editTodo(todo)">{{todo.text}}</label>
+							<button @click="removeTodo(todo)" class="destroy"></button>
 						</div>
-						<!-- <input class="edit" type="text" /> -->
+						<input class="edit" type="text" v-model.trim="todo.text" v-edit-focus="todo === editingTodo" @blur="doneEdit(todo)" @keyup.enter="doneEdit(todo)" @keyup.escape="cancelEdit(todo)" />
 					</li>
 					<!-- <li class="editing">
 						<div class="view">
@@ -40,13 +41,13 @@
 				</ul>
 			</section>
 			<footer class="footer">
-				<span class="todo-count">进行中<strong>0</strong>items left </span>
+				<span class="todo-count">进行中<strong>{{remaining}}</strong>{{pluralize(remaining)}} left </span>
 				<ul class="filters">
-					<li><a href="#/all" class="selected">显示所有</a></li>
-					<li><a href="#/active">进行中</a></li>
-					<li><a href="#/completed">已完成</a></li>
+					<li><a href="#/all" :class="{ selected: visibility === 'all' }">显示所有</a></li>
+					<li><a href="#/active" :class="{ selected: visibility === 'active' }">进行中</a></li>
+					<li><a href="#/completed" :class="{ selected: visibility === 'completed' }">已完成</a></li>
 				</ul>
-				<button class="clear-completed">清除已完成</button>
+				<button v-show="todos.length > remaining" @click="removeCompleted" class="clear-completed">清除已完成</button>
 			</footer>
 		</section>
 		<footer class="info">
@@ -58,6 +59,7 @@
 		</footer>
 		<!-- <script src="https://unpkg.com/vue@next/dist/vue.global.js"></script> -->
 		<script src="https://unpkg.com/vue@next"></script>
+		<!-- <script src="https://cdn.jsdelivr.net/npm/vue"></script> -->
 		<script src="./index.js"></script>
 	</body>
 </html>
