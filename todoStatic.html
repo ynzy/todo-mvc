@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>todo静态页</title>
+		<link rel="stylesheet" href="https://unpkg.com/todomvc-app-css/index.css" />
+	</head>
+
+	<body>
+		<section id="app" class="todoapp">
+			<header class="header">
+				<h1>todos</h1>
+				<input class="new-todo" placeholder="你需要做什么" autocomplete="off" autofocus v-model="input" @keyup.enter="addTodo" />
+			</header>
+			<section class="main">
+				<input id="toggle-all" class="toggle-all" type="checkbox" />
+				<label for="toggle-all">点击完成所有事项</label>
+				<ul class="todo-list">
+					<li class="completed">
+						<div class="view" style="display: block">
+							<input class="toggle" type="checkbox" />
+							<label>内容</label>
+							<button class="destroy"></button>
+						</div>
+						<!-- <input class="edit" type="text" /> -->
+					</li>
+					<li class="">
+						<div class="view" style="display: block">
+							<input class="toggle" type="checkbox" />
+							<label>内容</label>
+							<button class="destroy"></button>
+						</div>
+						<!-- <input class="edit" type="text" /> -->
+					</li>
+					<li class="editing">
+						<div class="view">
+							<input class="toggle" type="checkbox" />
+							<label>内容</label>
+							<button class="destroy"></button>
+						</div>
+						<input class="edit" type="text" />
+					</li>
+				</ul>
+			</section>
+			<footer class="footer">
+				<span class="todo-count">进行中<strong>0</strong>items left </span>
+				<ul class="filters">
+					<li><a href="#/all" class="selected">显示所有</a></li>
+					<li><a href="#/active">进行中</a></li>
+					<li><a href="#/completed">已完成</a></li>
+				</ul>
+				<button class="clear-completed" @click="removeCompleted">清除已完成</button>
+			</footer>
+		</section>
+		<footer class="info">
+			<p>双击编辑todo事项</p>
+			<!-- Change this out with your name and url ↓ -->
+			<p>创建者<a href="https://zce.me">zce</a></p>
+			<p>编辑者<a href="http://evanyou.me">Evan You</a></p>
+			<p>Part of <a href="http://todomvc.com">TodoMVC</a></p>
+		</footer>
+	</body>
+</html>
+<!-- 
+	功能描述：
+		头部：
+			1. 点击输入框可以添加todo事项
+			2. 点击左侧下拉菜单可以完成所有todo(有todos时显示)
+		todos列表：
+			1. 显示所有todos事项列表
+			2. 点击待办事项按钮，完成代办事项(completed)
+			3. todo和completed事项可以删除
+			4. 双击事项可以修改内容
+			注：li上的状态：‘’进行中 completed已完成 editing编辑
+		底部：
+			1. 显示todo事项条数(多条显示items，一条显示item)
+			2. 切换显示状态(所有、进行中、已完成)
+			3. 清空completed事项
+ -->
