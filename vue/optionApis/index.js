@@ -27,7 +27,8 @@ const filters = {
 	completed: todos => todos.filter(todo => todo.completed)
 }
 
-Vue.createApp({
+new Vue({
+	el: '#app',
 	data: () => ({
 		/* todos: [
 			{ id: 1, text: '事项1', completed: false },
@@ -39,15 +40,17 @@ Vue.createApp({
 		visibility: 'all', // 切换显示
 		editingTodo: null, // 编辑项
 		beforeEditText: '' // 编辑前的text
-		// remaining: 0 //剩下要做的
 	}),
 	computed: {
+		//剩下要做的
 		remaining() {
 			return filters.active(this.todos).length
 		},
+		// 过滤显示todos
 		filteredTodos() {
 			return filters[this.visibility](this.todos)
 		},
+		// 完成所有项
 		allDone: {
 			get() {
 				return !this.remaining
@@ -62,7 +65,6 @@ Vue.createApp({
 
 	watch: {
 		todos(val) {
-			console.log(val)
 			storage.set(this.todos)
 		}
 	},
@@ -119,10 +121,10 @@ Vue.createApp({
 		},
 
 		pluralize(count) {
-			return count === 1 ? 'item' : 'items'
+			return count <= 1 ? 'item' : 'items'
 		}
 	},
 	directives: {
 		editFocus: (el, { value }) => value && el.focus()
 	}
-}).mount('#app')
+})
