@@ -1,7 +1,5 @@
 <script lang="ts">
 import {
-  reactive,
-  toRefs,
   computed,
   watchEffect,
   onMounted,
@@ -12,12 +10,15 @@ import {
   type ComputedRef,
   type WritableComputedRef
 } from 'vue';
-import type { Todo, VisibleType, Filters } from './types';
+import type { Todo, VisibleType, Filters } from './todos/interface';
 
-const storage = {
-  get: () => JSON.parse(localStorage.getItem('latest_todos') || '[]'),
-  set: (value) => localStorage.setItem('latest_todos', JSON.stringify(value))
-};
+import { storage } from '@/utils/storage';
+import { useTodos } from './todos/useTodos';
+
+// const storage = {
+//   get: () => JSON.parse(localStorage.getItem('latest_todos') || '[]'),
+//   set: (value) => localStorage.setItem('latest_todos', JSON.stringify(value))
+// };
 
 const filters: Filters = {
   all: (todos) => todos,
@@ -27,7 +28,7 @@ const filters: Filters = {
 
 export default defineComponent({
   setup(props) {
-    const todos = ref<Todo[]>(storage.get());
+    const todos = useTodos();
     const visibility: Ref<VisibleType> = ref('all');
     const filteredTodos = computed(() => filters[visibility.value](todos.value));
     const input = ref('');
@@ -42,10 +43,6 @@ export default defineComponent({
           todo.completed = value;
         });
       }
-    });
-    // 自动收集依赖，调用一次回调，通过 Proxy 监视哪些被使用
-    watchEffect(() => {
-      storage.set(todos.value);
     });
 
     onMounted(() => {
@@ -74,22 +71,22 @@ export default defineComponent({
       input.value = '';
     };
 
-    const removeTodo = (todo) => {
+    const removeTodo = (todo: Todo) => {
       todos.value.splice(todos.value.indexOf(todo), 1);
     };
 
-    const editTodo = (todo) => {
+    const editTodo = (todo: Todo) => {
       editingTodo.value = todo;
       beforeEditText.value = todo.text;
     };
 
-    const doneEdit = (todo) => {
+    const doneEdit = (todo: Todo) => {
       if (!editingTodo.value) return;
       todo.text || removeTodo(todo);
       editingTodo.value = null;
     };
 
-    const cancelEdit = (todo) => {
+    const cancelEdit = () => {
       editingTodo.value = null;
       text.value = beforeEditText.value;
     };
@@ -98,7 +95,7 @@ export default defineComponent({
       todos.value = filters.active(todos.value);
     };
 
-    const pluralize = (count) => {
+    const pluralize = (count: number) => {
       return count <= 1 ? 'item' : 'items';
     };
 
