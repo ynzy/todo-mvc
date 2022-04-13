@@ -1,13 +1,14 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { useAddTodo, useEditTodo } from './todos/useHandlTodo';
+import { useAddTodo, useEditTodo, useRemoveTodo } from './todos/useHandlTodo';
 import { filters, useTodos } from './todos/useTodos';
 
 export default defineComponent({
   setup(props) {
     const { todos, visibility, filteredTodos, remaining, allDone } = useTodos();
     const { input, addTodo } = useAddTodo(todos);
-    const { editingTodo, editTodo, doneEdit, cancelEdit, removeTodo } = useEditTodo(todos);
+    const { editingTodo, editTodo, doneEdit, cancelEdit } = useEditTodo(todos);
+    const { removeTodo } = useRemoveTodo(todos);
 
     const removeCompleted = () => {
       todos.value = filters.active(todos.value);
