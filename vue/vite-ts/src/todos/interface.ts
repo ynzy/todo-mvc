@@ -1,8 +1,14 @@
+import type { Ref } from 'vue';
+
 export interface Todo {
   id: number;
   text: string;
   completed: boolean;
 }
+
+export type Todos = Todo[];
+
+export type RefTodos = Ref<Todo[]>;
 
 // export interface Todos {
 //   Todos: Todo[];

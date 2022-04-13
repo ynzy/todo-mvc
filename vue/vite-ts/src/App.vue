@@ -1,96 +1,13 @@
 <script lang="ts">
-import {
-  computed,
-  watchEffect,
-  onMounted,
-  onUnmounted,
-  defineComponent,
-  ref,
-  type Ref,
-  type ComputedRef,
-  type WritableComputedRef
-} from 'vue';
-import type { Todo, VisibleType, Filters } from './todos/interface';
-
-import { storage } from '@/utils/storage';
-import { useTodos } from './todos/useTodos';
-import { useEventListener } from './hooks/useEventListener';
-
-// const storage = {
-//   get: () => JSON.parse(localStorage.getItem('latest_todos') || '[]'),
-//   set: (value) => localStorage.setItem('latest_todos', JSON.stringify(value))
-// };
-
-const filters: Filters = {
-  all: (todos) => todos,
-  active: (todos) => todos.filter((todo) => !todo.completed),
-  completed: (todos) => todos.filter((todo) => todo.completed)
-};
+import { defineComponent } from 'vue';
+import { useAddTodo, useEditTodo } from './todos/useHandlTodo';
+import { filters, useTodos } from './todos/useTodos';
 
 export default defineComponent({
   setup(props) {
-    const todos = useTodos();
-    const visibility: Ref<VisibleType> = ref('all');
-    const filteredTodos = computed(() => filters[visibility.value](todos.value));
-    const input = ref('');
-    const editingTodo = ref<Todo | null>(null);
-    const text = ref('');
-    const beforeEditText = ref('');
-    const remaining: ComputedRef<number> = computed(() => filters.active(todos.value).length);
-    const allDone: WritableComputedRef<boolean> = computed({
-      get: () => !remaining.value,
-      set: (value) => {
-        todos.value.forEach((todo) => {
-          todo.completed = value;
-        });
-      }
-    });
-    const onHashChange = (e: HashChangeEvent) => {
-      console.log(e);
-      const hash = window.location.hash.replace(/#\/?/, '');
-      if (filters[hash]) {
-        visibility.value = hash as VisibleType;
-      } else {
-        visibility.value = 'all';
-        window.location.hash = '';
-      }
-    };
-    useEventListener('hashchange', onHashChange);
-    // onMounted(() => {
-    //   window.addEventListener('hashchange', onHashChange);
-    //   onHashChange();
-    // });
-
-    // onUnmounted(() => {
-    //   window.removeEventListener('hashchange', onHashChange);
-    // });
-
-    const addTodo = () => {
-      const text = input.value;
-      if (!text) return;
-      todos.value.push({ id: todos.value.length + 1, text, completed: false });
-      input.value = '';
-    };
-
-    const removeTodo = (todo: Todo) => {
-      todos.value.splice(todos.value.indexOf(todo), 1);
-    };
-
-    const editTodo = (todo: Todo) => {
-      editingTodo.value = todo;
-      beforeEditText.value = todo.text;
-    };
-
-    const doneEdit = (todo: Todo) => {
-      if (!editingTodo.value) return;
-      todo.text || removeTodo(todo);
-      editingTodo.value = null;
-    };
-
-    const cancelEdit = () => {
-      editingTodo.value = null;
-      text.value = beforeEditText.value;
-    };
+    const { todos, visibility, filteredTodos, remaining, allDone } = useTodos();
+    const { input, addTodo } = useAddTodo(todos);
+    const { editingTodo, editTodo, doneEdit, cancelEdit, removeTodo } = useEditTodo(todos);
 
     const removeCompleted = () => {
       todos.value = filters.active(todos.value);
@@ -108,7 +25,6 @@ export default defineComponent({
       allDone,
       editingTodo,
       remaining,
-      // ...toRefs(state),
       addTodo,
       removeTodo,
       editTodo,
@@ -149,7 +65,7 @@ export default defineComponent({
           <div class="view">
             <input v-model="todo.completed" class="toggle" type="checkbox" />
             <label @dblclick="editTodo(todo)">{{ todo.text }}</label>
-            <button @click="removeTodo" class="destroy"></button>
+            <button @click="removeTodo(todo)" class="destroy"></button>
           </div>
           <input
             v-model.trim="todo.text"
