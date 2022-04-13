@@ -14,6 +14,7 @@ import type { Todo, VisibleType, Filters } from './todos/interface';
 
 import { storage } from '@/utils/storage';
 import { useTodos } from './todos/useTodos';
+import { useEventListener } from './hooks/useEventListener';
 
 // const storage = {
 //   get: () => JSON.parse(localStorage.getItem('latest_todos') || '[]'),
@@ -44,17 +45,8 @@ export default defineComponent({
         });
       }
     });
-
-    onMounted(() => {
-      window.addEventListener('hashchange', onHashChange);
-      onHashChange();
-    });
-
-    onUnmounted(() => {
-      window.removeEventListener('hashchange', onHashChange);
-    });
-
-    const onHashChange = () => {
+    const onHashChange = (e: HashChangeEvent) => {
+      console.log(e);
       const hash = window.location.hash.replace(/#\/?/, '');
       if (filters[hash]) {
         visibility.value = hash as VisibleType;
@@ -63,6 +55,15 @@ export default defineComponent({
         window.location.hash = '';
       }
     };
+    useEventListener('hashchange', onHashChange);
+    // onMounted(() => {
+    //   window.addEventListener('hashchange', onHashChange);
+    //   onHashChange();
+    // });
+
+    // onUnmounted(() => {
+    //   window.removeEventListener('hashchange', onHashChange);
+    // });
 
     const addTodo = () => {
       const text = input.value;
