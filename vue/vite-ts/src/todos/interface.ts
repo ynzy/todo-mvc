@@ -1,7 +1,7 @@
 import type { Ref } from 'vue';
 
 export interface Todo {
-  id: number;
+  id: symbol;
   text: string;
   completed: boolean;
 }

@@ -10,7 +10,9 @@ export const useAddTodo = (todos: RefTodos) => {
   const addTodo = () => {
     const text = input.value;
     if (!text) return;
-    todos.value.push({ id: todos.value.length + 1, text, completed: false });
+    todos.value.push({ id: Symbol(), text, completed: false });
+    console.log(todos.value);
+
     input.value = '';
   };
   return {
