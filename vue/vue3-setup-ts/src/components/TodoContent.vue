@@ -13,7 +13,7 @@ const emit = defineEmits<{
   (e: 'update:allDone', value: boolean): void;
 }>();
 const { allDone, todos } = toRefs(props);
-console.log(allDone);
+// console.log(allDone);
 
 // 这种方式获取到的是字符串
 // const changeInput = (event) => {

@@ -35,13 +35,17 @@ export const useTodos = () => {
       });
     }
   });
-  // 自动收集依赖，调用一次回调，通过 Proxy 监视哪些被使用
-  watchEffect(() => {
-    storage.set(KEY, todos.value);
-  });
 
   onMounted(() => {
+    // console.log('onMounted');
     todos.value = storage.get<Todo[]>(KEY) || [];
+    // 自动收集依赖，调用一次回调，通过 Proxy 监视哪些被使用
+    // 如果放在onMounted外面执行，会先执行effect，再执行mounted
+    // https://juejin.cn/post/7093089634694987783
+    watchEffect(() => {
+      // console.log('watchEffect');
+      storage.set(KEY, todos.value);
+    });
   });
   const removeCompleted = () => {
     todos.value = filters.active(todos.value);
