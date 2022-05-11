@@ -1,11 +1,9 @@
 <script setup lang="ts">
-import { toRefs } from 'vue';
-import { useTodos } from '@/todos/useTodos';
-import { useInjector } from '@/utils/injection';
-
-const inject = useInjector(useTodos);
-
-const { todos, remaining, visibility, removeCompleted } = toRefs(inject!); // 非空断言
+import { useTodosStore } from '@/store/todo';
+import { storeToRefs } from 'pinia';
+const todoStore = useTodosStore();
+const { todos, remaining, visibility } = storeToRefs(todoStore);
+const { removeCompleted } = todoStore;
 
 const pluralize = (count: number) => {
   return count <= 1 ? 'item' : 'items';

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { Todo } from '@/todos/interface';
-import { toRefs, watch } from 'vue';
+import { toRefs } from 'vue';
 import { useRemoveTodo } from '@/todos/useRemoveTodo';
 import { useEditTodo } from '@/todos/useEditTodo';
 
@@ -19,12 +19,6 @@ const vEditFocus = {
     value && el.focus();
   }
 };
-watch(
-  () => todo.value.completed,
-  (v) => {
-    console.log(v);
-  }
-);
 </script>
 <template>
   <li :class="{ completed: todo.completed, editing: editingTodo == todo }">

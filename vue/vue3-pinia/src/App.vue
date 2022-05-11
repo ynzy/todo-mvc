@@ -3,11 +3,9 @@ import TodoHeader from '@/components/TodoHeader.vue';
 import TodoFooter from '@/components/TodoFooter.vue';
 import TodoContent from '@/components/TodoContent.vue';
 
-import { useTodos } from './todos/useTodos';
-import { useProvider } from './utils/injection';
-
-const provider = useProvider(useTodos);
-console.log(provider);
+import { useTodosStore } from '@/store/todo';
+const store = useTodosStore();
+console.log(store);
 </script>
 
 <template>

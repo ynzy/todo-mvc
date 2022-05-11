@@ -1,11 +1,9 @@
 <script setup lang="ts">
-import { toRefs } from 'vue';
-import { useTodos } from '@/todos/useTodos';
-import { useInjector } from '@/utils/injection';
 import TodoItem from './TodoItem.vue';
-
-const inject = useInjector(useTodos);
-const { filteredTodos: todos, allDone } = toRefs(inject!);
+import { useTodosStore } from '@/store/todo';
+import { storeToRefs } from 'pinia';
+const todosStore = useTodosStore();
+const { filteredTodos: todos, allDone } = storeToRefs(todosStore);
 </script>
 <template>
   <section class="main">

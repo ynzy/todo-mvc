@@ -1,12 +1,9 @@
 import { ref } from 'vue';
-import { useInjector } from '@/utils/injection';
-import { useTodos } from './useTodos';
+import { useTodosStore } from '@/store/todo';
 
 export const useAddTodo = () => {
   const input = ref('');
-  // 拿todo的数据
-  const injector = useInjector(useTodos);
-  const todos = injector?.todos;
+  const { todos } = useTodosStore();
   /**
    * 添加todo
    * @returns
@@ -14,8 +11,8 @@ export const useAddTodo = () => {
   const addTodo = () => {
     const text = input.value;
     if (!text) return;
-    todos?.value.push({ id: Symbol(), text, completed: false });
-    console.log(todos?.value);
+    todos.push({ id: Symbol(), text, completed: false });
+    console.log(todos);
 
     input.value = '';
   };
