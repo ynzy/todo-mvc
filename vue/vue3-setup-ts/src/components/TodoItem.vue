@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { Todo } from '@/todos/interface';
-import { toRefs } from 'vue';
+import { toRefs, watch } from 'vue';
 import { useEditTodo, useRemoveTodo } from '@/todos/useHandlTodo';
 
 interface IProps {
@@ -19,6 +19,12 @@ const vEditFocus = {
     value && el.focus();
   }
 };
+watch(
+  () => todo.value.completed,
+  (v) => {
+    console.log(v);
+  }
+);
 </script>
 <template>
   <li :class="{ completed: todo.completed, editing: editingTodo == todo }">

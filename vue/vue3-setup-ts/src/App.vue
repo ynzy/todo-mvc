@@ -1,31 +1,23 @@
 <script setup lang="ts">
-import TodoHeader from '@/components/TodoHeader.vue'
-import TodoItem from '@/components/TodoItem.vue'
-import TodoFooter from '@/components/TodoFooter.vue'
+import TodoHeader from '@/components/TodoHeader.vue';
+import TodoFooter from '@/components/TodoFooter.vue';
+import TodoContent from '@/components/TodoContent.vue';
 
-import { filters, useTodos } from './todos/useTodos';
+import { useTodos } from './todos/useTodos';
 
-const { todos, visibility, filteredTodos, remaining, allDone } = useTodos();
-
-
-const removeCompleted = () => {
-  todos.value = filters.active(todos.value);
-};
-
+const { todos, visibility, filteredTodos, remaining, allDone, removeCompleted } = useTodos();
 </script>
 
 <template>
   <section class="todoapp">
-    <TodoHeader :todos="todos"/>
-    <section class="main">
-      <input v-model="allDone" id="toggle-all" class="toggle-all" type="checkbox" />
-      <label for="toggle-all">点击完成所有事项</label>
-      <ul class="todo-list">
-        <TodoItem v-for="todo in filteredTodos" :key="todo.id" :todos="filteredTodos" :todo="todo">
-        </TodoItem>
-      </ul>
-    </section>
-  <TodoFooter :todos="todos" :remaining="remaining" :visibility="visibility" @remove="removeCompleted"/>
+    <TodoHeader :todos="todos" />
+    <TodoContent v-model:allDone="allDone" :todos="filteredTodos" />
+    <TodoFooter
+      :todos="todos"
+      :remaining="remaining"
+      :visibility="visibility"
+      @remove="removeCompleted"
+    />
   </section>
   <footer class="info">
     <p>双击编辑todo事项</p>
@@ -36,6 +28,4 @@ const removeCompleted = () => {
   </footer>
 </template>
 
-<style>
-
-</style>
+<style></style>
