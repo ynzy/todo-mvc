@@ -131,6 +131,7 @@ body {
     position: absolute;
     top: -65px;
     left: -0;
+    cursor: pointer;
 }
 
 .toggle-all+label:before {

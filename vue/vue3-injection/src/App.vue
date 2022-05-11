@@ -6,7 +6,6 @@ import TodoContent from '@/components/TodoContent.vue';
 import { useTodos } from './todos/useTodos';
 import { useProvider } from './utils/injection';
 
-const { todos, visibility, filteredTodos, remaining, allDone, removeCompleted } = useTodos();
 const provider = useProvider(useTodos);
 console.log(provider);
 </script>

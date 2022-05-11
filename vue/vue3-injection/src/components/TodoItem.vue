@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import type { Todo } from '@/todos/interface';
 import { toRefs, watch } from 'vue';
-import { useEditTodo, useRemoveTodo } from '@/todos/useHandlTodo';
+import { useRemoveTodo } from '@/todos/useRemoveTodo';
+import { useEditTodo } from '@/todos/useEditTodo';
 
 interface IProps {
   todo: Todo;

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useAddTodo } from '@/todos/useHandlTodo';
+import { useAddTodo } from '@/todos/useAddTodo';
 
 const { input, addTodo } = useAddTodo();
 </script>
