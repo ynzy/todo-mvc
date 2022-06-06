@@ -95,7 +95,7 @@ createApp({
 
 		const cancelEdit = todo => {
 			editingTodo.value = null
-			state.text = beforeEditText.value
+			todo.text = beforeEditText.value
 		}
 
 		const removeCompleted = () => {

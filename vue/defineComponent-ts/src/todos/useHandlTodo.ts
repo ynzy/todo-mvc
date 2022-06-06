@@ -46,9 +46,9 @@ export const useEditTodo = (todos: RefTodos) => {
   /**
    * 取消编辑
    */
-  const cancelEdit = () => {
+  const cancelEdit = (todo) => {
     editingTodo.value = null;
-    text.value = beforeEditText.value;
+    todo.value = beforeEditText.value;
   };
 
   return {

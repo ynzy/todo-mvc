@@ -1,40 +1,21 @@
 <template>
   <section class="todoapp">
-    <header class="header">
-      <h1>todos</h1>
-      <input
-        v-model.trim="input"
-        @keyup.enter="addTodo"
-        class="new-todo"
-        placeholder="你需要做什么"
-        autocomplete="off"
-        autofocus
-      />
-    </header>
+    <Header v-model:input="input" @addTodo="addTodo" />
     <section class="main">
-      <input v-model="allDone" id="toggle-all" class="toggle-all" type="checkbox" />
-      <label for="toggle-all">点击完成所有事项</label>
+      <CheckAll v-model:allDone="allDone" />
       <ul class="todo-list">
-        <li
+        <TodoList
           v-for="todo in filteredTodos"
           :key="todo.id"
-          :class="{ completed: todo.completed, editing: editingTodo == todo }"
-        >
-          <div class="view">
-            <input v-model="todo.completed" class="toggle" type="checkbox" />
-            <label @dblclick="editTodo(todo)">{{ todo.text }}</label>
-            <button @click="removeTodo" class="destroy"></button>
-          </div>
-          <input
-            v-model.trim="todo.text"
-            v-edit-focus="editingTodo == todo"
-            @blur="doneEdit(todo)"
-            @keyup.enter="doneEdit(todo)"
-            @keyup.escape="cancelEdit(todo)"
-            class="edit"
-            type="text"
-          />
-        </li>
+          :todo="todo"
+          :editingTodo="editingTodo"
+          v-model:completed="todo.completed"
+          v-model:text="todo.text"
+          @editTodo="editTodo"
+          @doneEdit="doneEdit"
+          @cancelEdit="cancelEdit"
+          @removeTodo="removeTodo"
+        />
       </ul>
     </section>
     <footer class="footer">
@@ -62,6 +43,9 @@
 </template>
 <script>
 import { defineComponent, ref, computed, watchEffect, onMounted, onUnmounted } from 'vue';
+import Header from '@/components/Header.vue';
+import CheckAll from '@/components/CheckAll.vue';
+import TodoList from '@/components/TodoList.vue';
 const storage = {
   get: () => JSON.parse(localStorage.getItem('latest_todos') || '[]'),
   set: (value) => localStorage.setItem('latest_todos', JSON.stringify(value))
@@ -73,6 +57,11 @@ const filters = {
   completed: (todos) => todos.filter((todo) => todo.completed)
 };
 export default defineComponent({
+  components: {
+    Header,
+    CheckAll,
+    TodoList
+  },
   setup(props) {
     const todos = ref(storage.get());
     const input = ref('');
@@ -165,9 +154,6 @@ export default defineComponent({
       removeCompleted,
       pluralize
     };
-  },
-  directives: {
-    editFocus: (el, { value }) => value && el.focus()
   }
 });
 </script>
