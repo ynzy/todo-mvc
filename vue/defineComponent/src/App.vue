@@ -52,13 +52,6 @@
       </button>
     </footer>
   </section>
-  <footer class="info">
-    <p>双击编辑todo事项</p>
-    <!-- Change this out with your name and url ↓ -->
-    <p>创建者<a href="https://zce.me">zce</a></p>
-    <p>编辑者<a href="http://evanyou.me">Evan You</a></p>
-    <p>Part of <a href="http://todomvc.com">TodoMVC</a></p>
-  </footer>
 </template>
 <script>
 import { defineComponent, ref, computed, watchEffect, onMounted, onUnmounted } from 'vue';
