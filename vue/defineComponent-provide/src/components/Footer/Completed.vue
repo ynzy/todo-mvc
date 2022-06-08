@@ -4,27 +4,19 @@
   </button>
 </template>
 <script>
-import { defineComponent, toRefs, computed } from 'vue';
+import { defineComponent, inject } from 'vue';
 import { filters } from '@/utils/index';
 
 export default defineComponent({
-  props: {
-    todos: Array,
-    remaining: Number
-  },
   emits: ['update:todos'],
-  setup(props, { emit }) {
-    const { todos } = toRefs(props);
-    const todosValue = computed({
-      get: () => todos.value,
-      set: (v) => {
-        emit('update:todos', v);
-      }
-    });
+  setup() {
+    const { todos, remaining } = inject('todosStore');
     const removeCompleted = () => {
-      todosValue.value = filters.active(todos.value);
+      todos.value = filters.active(todos.value);
     };
     return {
+      todos,
+      remaining,
       removeCompleted
     };
   }

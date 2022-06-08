@@ -1,16 +1,16 @@
 <template>
   <section class="todoapp">
-    <Header v-model:todos="todos" />
-    <Main v-model:todos="todos" :visibility="visibility" :remaining="remaining" />
+    <Header />
+    <Main />
     <footer class="footer">
-      <Count :remaining="remaining" />
-      <Filter v-model:visibility="visibility" />
-      <Completed v-model:todos="todos" :remaining="remaining" />
+      <Count />
+      <Filter />
+      <Completed  />
     </footer>
   </section>
 </template>
 <script>
-import { defineComponent, ref, provide } from 'vue';
+import { defineComponent, provide } from 'vue';
 import Header from '@/components/Header/Header.vue';
 import Main from '@/components/Main/Main.vue';
 import Count from '@/components/Footer/Count.vue';
@@ -28,13 +28,8 @@ export default defineComponent({
   },
   setup() {
     const todosStore = useTodosStore();
-    const { todos, remaining } = todosStore;
     provide('todosStore', todosStore);
-    const visibility = ref('all');
     return {
-      todos,
-      visibility,
-      remaining
     };
   }
 });

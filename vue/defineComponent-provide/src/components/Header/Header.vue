@@ -12,17 +12,12 @@
   </header>
 </template>
 <script>
-import { ref, defineComponent, inject } from 'vue';
+import { defineComponent } from 'vue';
+import { useAddTodo } from '@/todos/useAddTodo';
 export default defineComponent({
   setup() {
-    const { todos } = inject('todosStore');
-    const input = ref('');
-    const addTodo = () => {
-      const text = input.value;
-      if (!text) return;
-      todos.value.push({ id: todos.value.length + 1, text, completed: false });
-      input.value = '';
-    };
+    const { input, addTodo } = useAddTodo();
+
     return {
       input,
       addTodo

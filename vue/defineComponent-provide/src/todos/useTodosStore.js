@@ -14,10 +14,22 @@ export const useTodosStore = () => {
   watchEffect(() => {
     storage.set(KEY, todos.value);
   });
+  // 显示类型
   const visibility = ref('all');
+  // 根据类型显示对应的todos数据
   const filteredTodos = computed(() => filters[visibility.value](todos.value));
+  // 进行中的数量
   const remaining = computed(() => filters.active(todos.value).length);
-
+  // 完成所有todo操作
+  const allDone = computed({
+    get: () => !remaining.value,
+    set: (value) => {
+      todos.value.forEach((todo) => {
+        todo.completed = value;
+      });
+    }
+  });
+  // 监听浏览器hash变化
   const onHashChange = () => {
     const hash = window.location.hash.replace(/#\/?/, '');
     if (filters[hash]) {
@@ -31,6 +43,8 @@ export const useTodosStore = () => {
   return {
     todos,
     filteredTodos,
-    remaining
+    remaining,
+    visibility,
+    allDone
   };
 };
