@@ -5,7 +5,7 @@
     <li><a href="#/completed" :class="{ selected: visibility === 'completed' }">已完成</a></li>
   </ul>
 </template>
-<script>
+<script lang="ts">
 import { computed, defineComponent, onMounted, onUnmounted } from 'vue';
 import { filters } from '@/utils/index';
 

@@ -17,7 +17,7 @@
     </ul>
   </section>
 </template>
-<script>
+<script lang="ts">
 import { defineComponent, ref, toRefs, computed } from 'vue';
 import { filters } from '@/utils/index';
 import CheckAll from '@/components/Main/CheckAll.vue';

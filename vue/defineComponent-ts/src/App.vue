@@ -9,7 +9,7 @@
     </footer>
   </section>
 </template>
-<script>
+<script lang="ts">
 import { defineComponent, ref, computed, watchEffect } from 'vue';
 import { filters } from '@/utils/index';
 import Header from '@/components/Header/Header.vue';

@@ -3,7 +3,7 @@
     清除已完成
   </button>
 </template>
-<script>
+<script lang="ts">
 import { defineComponent, toRefs, computed } from 'vue';
 import { filters } from '@/utils/index';
 

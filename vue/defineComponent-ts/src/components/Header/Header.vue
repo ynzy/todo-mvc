@@ -11,7 +11,7 @@
     />
   </header>
 </template>
-<script>
+<script lang="ts">
 import { computed, ref, toRefs, defineComponent } from 'vue';
 export default defineComponent({
   props: {

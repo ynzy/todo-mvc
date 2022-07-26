@@ -2,7 +2,7 @@
   <input v-model="allDoneValue" id="toggle-all" class="toggle-all" type="checkbox" />
   <label for="toggle-all">点击完成所有事项</label>
 </template>
-<script>
+<script lang="ts">
 import { computed, defineComponent } from 'vue';
 export default defineComponent({
   props: {
