@@ -23,13 +23,14 @@ import CheckAll from '@/components/Main/CheckAll.vue';
 import TodoList from '@/components/Main/TodoList.vue';
 import { useRemoveTodo } from '@/todos/useRemoveTodo';
 import { useEditTodo } from '@/todos/useEditTodo';
+import type { TodosStore } from '@/todos/interface';
 export default defineComponent({
   components: {
     CheckAll,
     TodoList
   },
   setup() {
-    const { filteredTodos, visibility, remaining, allDone } = inject('todosStore');
+    const { filteredTodos, visibility, remaining, allDone } = inject<TodosStore>('todosStore', {} as TodosStore);
     const { removeTodo } = useRemoveTodo();
     const { editingTodo, editTodo, doneEdit, cancelEdit } = useEditTodo();
 

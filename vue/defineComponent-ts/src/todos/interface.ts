@@ -19,7 +19,7 @@ export interface Filters {
 }
 
 export interface TodosStore {
-  todos: RefTodos;
+  todos: Ref<Todos>;
   filteredTodos: ComputedRef<Todo[]>;
   remaining: ComputedRef<number>;
   visibility: Ref<VisibleType>;

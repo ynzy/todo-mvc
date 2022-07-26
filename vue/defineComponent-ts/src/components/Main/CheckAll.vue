@@ -6,7 +6,10 @@
 import { computed, defineComponent } from 'vue';
 export default defineComponent({
   props: {
-    allDone: Boolean
+    allDone: {
+      type: Boolean,
+      required: true
+    }
   },
   emits: ['update:allDone'],
   setup(props, { emit }) {

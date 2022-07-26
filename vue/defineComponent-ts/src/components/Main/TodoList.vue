@@ -17,20 +17,27 @@
   </li>
 </template>
 <script lang="ts">
-import { defineComponent, computed, toRefs } from 'vue';
+import type { Todo } from '@/todos/interface';
+import { defineComponent, computed, toRefs, type PropType } from 'vue';
 export default defineComponent({
   props: {
-    todo: Object,
-    editingTodo: [null, Object]
+    todo: {
+      type: Object as PropType<Todo>,
+      required: true
+    },
+    editingTodo: {
+      type: Object as PropType<null | Todo>, // 类型断言
+      required: true
+    }
   },
   emits: ['update:completed', 'update:text', 'editTodo', 'doneEdit', 'cancelEdit', 'removeTodo'],
   setup(props, { emit }) {
-    const { todo } = toRefs(props);
+    const { todo,editingTodo } = toRefs(props);
     const completed = computed({
       get() {
-        return todo.value.completed;
+        return todo.value.completed || false;
       },
-      set(value) {
+      set(value:boolean) {
         emit('update:completed', value);
       }
     });
@@ -64,7 +71,7 @@ export default defineComponent({
     };
   },
   directives: {
-    editFocus: (el, { value }) => value && el.focus()
+    editFocus: (el:HTMLInputElement, { value }) => value && el.focus()
   }
 });
 </script>

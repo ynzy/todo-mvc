@@ -6,11 +6,12 @@
   </ul>
 </template>
 <script lang="ts">
+import type { TodosStore } from '@/todos/interface';
 import { inject, defineComponent } from 'vue';
 
 export default defineComponent({
   setup() {
-    const { visibility } = inject('todosStore');
+    const { visibility } = inject<TodosStore>('todosStore', {} as TodosStore);
 
     return {
       visibility
