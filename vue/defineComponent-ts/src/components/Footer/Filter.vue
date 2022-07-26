@@ -6,40 +6,15 @@
   </ul>
 </template>
 <script lang="ts">
-import { computed, defineComponent, onMounted, onUnmounted } from 'vue';
-import { filters } from '@/utils/index';
+import { inject, defineComponent } from 'vue';
 
 export default defineComponent({
-  props: {
-    visibility: String
-  },
-  emits: ['update:visibility'],
-  setup(props, { emit }) {
-    const visibilityValue = computed({
-      get: () => props.visibility,
-      set: (v) => {
-        emit('update:visibility', v);
-      }
-    });
-    onMounted(() => {
-      window.addEventListener('hashchange', onHashChange);
-      onHashChange();
-    });
+  setup() {
+    const { visibility } = inject('todosStore');
 
-    onUnmounted(() => {
-      window.removeEventListener('hashchange', onHashChange);
-    });
-
-    const onHashChange = () => {
-      const hash = window.location.hash.replace(/#\/?/, '');
-      if (filters[hash]) {
-        visibilityValue.value = hash;
-      } else {
-        visibilityValue.value = 'all';
-        window.location.hash = '';
-      }
+    return {
+      visibility
     };
-    return {};
   }
 });
 </script>

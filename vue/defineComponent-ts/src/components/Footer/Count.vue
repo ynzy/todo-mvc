@@ -5,16 +5,15 @@
   </span>
 </template>
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, inject } from 'vue';
 export default defineComponent({
-  props: {
-    remaining: Number
-  },
   setup() {
+    const { remaining } = inject('todosStore');
     const pluralize = (count) => {
       return count <= 1 ? 'item' : 'items';
     };
     return {
+      remaining,
       pluralize
     };
   }

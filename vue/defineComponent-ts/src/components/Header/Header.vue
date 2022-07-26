@@ -12,27 +12,11 @@
   </header>
 </template>
 <script lang="ts">
-import { computed, ref, toRefs, defineComponent } from 'vue';
+import { defineComponent } from 'vue';
+import { useAddTodo } from '@/todos/useAddTodo';
 export default defineComponent({
-  props: {
-    todos: Array
-  },
-  emits: ['update:todos'],
-  setup(props, { emit }) {
-    const { todos } = toRefs(props);
-    const input = ref('');
-    const todosValue = computed({
-      get: () => todos.value,
-      set: (v) => {
-        emit('update:todos', v);
-      }
-    });
-    const addTodo = () => {
-      const text = input.value;
-      if (!text) return;
-      todosValue.value.push({ id: todosValue.value.length + 1, text, completed: false });
-      input.value = '';
-    };
+  setup() {
+    const { input, addTodo } = useAddTodo();
 
     return {
       input,
