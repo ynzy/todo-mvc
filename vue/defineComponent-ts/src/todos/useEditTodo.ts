@@ -17,11 +17,11 @@ export const useEditTodo = (): EditTodo => {
   const doneEdit = (todo: Todo) => {
     if (!editingTodo.value) return;
     todo.text || removeTodo(todo);
-    editingTodo.value = null;
+    editingTodo.value = {};
   };
   // 取消编辑
   const cancelEdit = (todo: Todo) => {
-    editingTodo.value = null;
+    editingTodo.value = {};
     todo.text = beforeEditText.value;
   };
   return {

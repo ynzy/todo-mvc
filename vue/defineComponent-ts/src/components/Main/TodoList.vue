@@ -26,13 +26,13 @@ export default defineComponent({
       required: true
     },
     editingTodo: {
-      type: Object as PropType<null | Todo>, // 类型断言
-      required: true
+      type: Object as PropType<Todo | null>, // 类型断言
+      // required: false
     }
   },
   emits: ['update:completed', 'update:text', 'editTodo', 'doneEdit', 'cancelEdit', 'removeTodo'],
   setup(props, { emit }) {
-    const { todo,editingTodo } = toRefs(props);
+    const { todo } = toRefs(props);
     const completed = computed({
       get() {
         return todo.value.completed || false;
